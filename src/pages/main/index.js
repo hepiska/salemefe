@@ -7,19 +7,14 @@ import {
   //   Redirect,
 } from "react-router-dom";
 import { Wrapper } from 'atoms'
-
 import { connect } from "react-redux";
-import CmsPage from './cms'
-import MainPage from './main'
 
 
-const Pages = () => (
+
+const MainPages = () => (
   <Wrapper width='100%' >
-    <Switch>
-      <Route path="/cms" component={CmsPage} />
-      <Route path="/" component={MainPage} />
-    </Switch>
+    ini main pages
   </Wrapper>
 )
 
-export default (Pages)
+export default (MainPages)

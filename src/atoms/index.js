@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { colors, shadows } from '@pomona/pomona3-ui/lib/constants'
 
 export const Wrapper = styled.div`
   font-family: 'Linotte';
@@ -7,7 +6,7 @@ export const Wrapper = styled.div`
   position: ${({ position }) => position || 'static'};
   flex: ${({ flex }) => flex || null};
   flex-wrap: ${({ wrap }) => wrap || null};
-  border-radius: ${({ radius }) => radius || '8px'};
+  border-radius: ${({ radius }) => radius || '0'};
   flex-direction: ${({ direction }) => direction || 'column'};
   align-items: ${({ align }) => align || 'center'};
   justify-content: ${({ justify }) => justify || 'center'};
@@ -21,14 +20,6 @@ export const Wrapper = styled.div`
   background: ${({ background }) => background || null};
   overflow: ${({ overflow }) => overflow || null};
   cursor: ${({ cursor }) => cursor || null};
-  ${props => (props.focus ? `
-    :hover {
-      box-shadow: ${shadows.focused};
-    }
-    :focus {
-      box-shadow: ${shadows.focused};
-    }
-  ` : null)}
 `
 
 export const ImageWrapper = styled.img`
@@ -47,8 +38,8 @@ export const NavContainer = styled.div`
   height: 56px;
   width: 100vw;
   z-index: 10;
-  box-shadow: ${({ shadow }) => shadow || shadows.idle};
-  background: ${({ backgroundColor }) => backgroundColor || colors.white};
+  box-shadow: ${({ shadow }) => shadow || null};
+  background: ${({ backgroundColor }) => backgroundColor || '#fff'};
   ${({ position }) => {
     switch (position) {
       case 'top':
@@ -84,3 +75,39 @@ export const PlainLink = styled.a`
   color: ${({ color }) => color || null};
   cursor: pointer;
 `
+
+
+export const FontWrapper = styled.p`
+  margin: ${({ dmargin, margin }) => dmargin || margin || 0};
+  padding: ${({ dpadding, padding }) => dpadding || padding || null};
+  font-family: ${({ fontFamily }) => fontFamily || "Lato,'Helvetica Neue',Arial,Helvetica,sans-serif"};
+  font-size: ${({ sizeType, size }) => {
+    if (size) {
+      return size
+    } else if (sizeType === 'title' || sizeType === 'h1') {
+      return '16px'
+    } else if (sizeType === 'h2' || sizeType === 'body') {
+      return '14px'
+    } else {
+      return '12px'
+    }
+  }};
+  font-weight: ${({ weight, weightType }) => {
+    if (weight) {
+      return weight
+    } else if (weightType === 'semibold') {
+      return '500'
+    } else if (weightType === 'light') {
+      return '300'
+    } else {
+      return '400'
+    }
+  }};
+  color: ${({ color }) => color || '#000'};
+  line-height: ${({ lineHeight }) => lineHeight || '1.2'};
+  text-align: ${({ textAlign }) => textAlign || 'left'};
+  @media screen and (max-width: 768px) {
+    padding: ${({ padding }) => padding || null};
+    margin: ${({ margin }) => margin || null};
+  }
+  `
