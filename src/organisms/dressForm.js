@@ -1,18 +1,17 @@
-import React from "react";
+import React from "react"
 import { Wrapper, ImageWrapper, FontWrapper } from 'atoms'
-import { connect } from "react-redux";
+import { connect } from "react-redux"
 import { Button, Form, Message, Input } from 'semantic-ui-react'
 import DropZone from 'react-dropzone'
-import SearchBar from 'molecules/searchBar'
 import { matchTrue } from 'utils/helper'
-import CmsListItem from 'molecules/cmsListItem'
+import { upload } from 'services'
 
 
 const defaultData = {
-   title: '',
-   image:'',
-   desc:'',
-   price:'',
+  title: '',
+  image: '',
+  desc: '',
+  price: '',
 }
 
 class DressForm extends React.Component {
@@ -32,18 +31,20 @@ class DressForm extends React.Component {
     },
     loadingStatus: false,
     response: {
-      title:'',
+      title: '',
       isModalOpen: false,
       message: 'sasasasa',
     },
   }
-  handleChange = ({target}) => {
+
+  handleChange = ({ target }) => {
     this.setState((state) => {
       state.input[target.name] = target.value
-      state.validation[target.name] = this.state.validationParams[target.name].test(target.value)
+      state.validation[target.name] = state.validationParams[target.name].test(target.value)
       return state
     })
   }
+
   onSubmit = () => {
     const newValidation = {
     }
@@ -60,26 +61,25 @@ class DressForm extends React.Component {
       }
     })
   }
+
   onUpload = (files) => {
-    const file = files[0];
-    const formData = new FormData();
-    formData.set("files", file, file.name);
-    // upload(formData).then(res => {
-    //   const data = res.data[0];
-    //   data.url = "/uploads/" + data.hash + data.ext;
-    //   this.setState(state => {
-    //     const userData = state.userData;
-    //     userData.gambar = data;
-    //     state.userData = userData;
-    //     return state;
-    //   });
-    // }); 
+    const file = files[0]
+    const reader = new FileReader()
+    // encoded = Base64.encode(file)
+    reader.readAsDataURL(file)
+    reader.onload = () => {
+      upload(reader.result).then(res => {
+        console.log(res)
+      })
+
+    }
   }
+
   render() {
     const { input, validation } = this.state
     return (
       <Wrapper width='100%' padding='16px'>
-        <Wrapper width='100%' >
+        <Wrapper width='100%'>
           <Wrapper width='100%' direction='row' justify='flex-start'>
             <ImageWrapper src={input.image} width='512px' height='512px' />
             <Wrapper flex='1' padding='0px 16px'>
@@ -92,29 +92,24 @@ class DressForm extends React.Component {
           </Wrapper>
           <Wrapper width='100%' padding='16px 16px 16px 0'>
             <Form style={{ width: "100%" }} onSubmit={this.onSubmit} error={!validation.image}>
-              <Form.Field  error={!validation.title}>
+              <Form.Field error={!validation.title}>
                 <label>Title</label>
-                <input placeholder='Title' value={input.title}  name='title' onChange={this.handleChange}/>
+                <input placeholder='Title' value={input.title} name='title' onChange={this.handleChange} />
               </Form.Field>
               <Form.Field error={!validation.price}>
                 <label>Price</label>
-                <input placeholder='Prize'  value={input.price}  name='price' onChange={this.handleChange}/>
+                <input placeholder='Prize' value={input.price} name='price' onChange={this.handleChange} />
               </Form.Field>
               <Form.Field error={!validation.image}>
                 <label>Image Url</label>
-                <input placeholder='Image url'  value={input.image}  name='image' onChange={this.handleChange}/>
+                <input placeholder='Image url' value={input.image} name='image' onChange={this.handleChange} />
               </Form.Field>
-              <Form.TextArea error={!validation.desc} label='Description' placeholder='Description' value={input.desc}  name='desc' onChange={this.handleChange}/>
-              <Message
-                error
-                header='Image Empty'
-                content='please upload image'
-              />
-              <Button type='submit' fluid >Submit</Button>
+              <Form.TextArea error={!validation.desc} label='Description' placeholder='Description' value={input.desc} name='desc' onChange={this.handleChange} />
+              <Button type='submit' fluid>Submit</Button>
             </Form>
           </Wrapper>
         </Wrapper>
-      </Wrapper >
+      </Wrapper>
     )
   }
 }

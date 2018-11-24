@@ -47,6 +47,7 @@
     ],
     "import/named": 2,
     "import/namespace": 2,
+    "import/no-named-as-default-member": "warn",
     "import/default": 2,
     "import/export": 2,
     "no-nested-ternary": "off",
@@ -84,6 +85,8 @@
     "prefer-rest-params": "warn",
     "prefer-destructuring": "warn",
     "no-param-reassign": "off",
+    "no-absolute-path": "off",
+    "react/destructuring-assignment": "off",
     "jsx-a11y/no-noninteractive-element-interactions": "warn",
     "jsx-a11y/click-events-have-key-events": "off",
     "jsx-a11y/no-noninteractive-tabindex": "off",
@@ -96,7 +99,8 @@
     "class-methods-use-this": "off",
     "jsx-a11y/no-static-element-interactions": "warn",
     "jsx-a11y/label-has-for": "off",
-    "no-restricted-syntax": "off"
+    "no-restricted-syntax": "off",
+    "jsx-a11y/label-has-associated-control": "off"
   },
   "env": {
     "es6": true,
@@ -115,6 +119,9 @@
   "settings": {
     "import/resolver": {
       "node": {
+        "paths": [
+          "src"
+        ],
         "extensions": [
           ".js",
           ".jsx"
