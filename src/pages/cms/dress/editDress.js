@@ -5,20 +5,44 @@ import { Button, Loader, Dimmer } from 'semantic-ui-react'
 import SearchBar from 'molecules/searchBar'
 import CmsListItem from 'molecules/cmsListItem'
 import DressFrom from 'organisms/dressForm'
-import { createDress } from 'services'
+import { editDress, getDressDetail } from 'services'
 
 
-class AddDressPage extends React.Component {
+class EdirDressPage extends React.Component {
   state = {
     searchKey: '',
     isLoading: false,
+  }
+
+  componentDidMount() {
+    if (this.props.match.params.id) {
+      this._getDressDetail(this.props.match.params.id)
+    }
+    else {
+      this.props.history.goBack()
+    }
+
+
+  }
+
+  _getDressDetail = (id) => {
+    this.setState({
+      isLoading: true,
+    })
+    getDressDetail(id)
+      .then((res) => {
+        this.setState({
+          dress: res.data,
+          isLoading: false,
+        })
+      })
   }
 
   onSubmit = (data) => {
     this.setState({
       isLoading: true,
     })
-    createDress(data)
+    editDress(this.props.match.params.id, data)
       .then(res => {
         this.setState({
           isLoading: false,
@@ -34,9 +58,12 @@ class AddDressPage extends React.Component {
   }
 
   render() {
+
     return (
       <Wrapper width='100%'>
-        <DressFrom onSubmit={this.onSubmit} />
+        {
+          this.state.dress && <DressFrom onSubmit={this.onSubmit} data={this.state.dress} />
+        }
         <Dimmer active={this.state.isLoading} page>
           <Loader />
         </Dimmer>
@@ -47,4 +74,4 @@ class AddDressPage extends React.Component {
 }
 
 
-export default (AddDressPage)
+export default (EdirDressPage)

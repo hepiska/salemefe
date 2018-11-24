@@ -12,7 +12,13 @@ const defaultData = {
   image: '',
   desc: '',
   price: '',
+  category: 'midi dress'
 }
+
+const dressOptions = [{ key: 'm', text: 'mini dress', value: 'mini dress' },
+{ key: 'f', text: 'midi dress', value: 'midi dress' },
+{ key: 'h', text: 'long dress', value: 'long dress' }
+]
 
 class DressForm extends React.Component {
   state = {
@@ -22,14 +28,15 @@ class DressForm extends React.Component {
       title: true,
       desc: true,
       price: true,
+      category: true,
     },
     validationParams: {
       image: /(\w{1,})/,
       title: /(\w{5,100})/,
       desc: /(\w{1,})/,
       price: /(\w{3,})/,
+      category: /(\w{3,})/,
     },
-    loadingStatus: false,
     response: {
       title: '',
       isModalOpen: false,
@@ -62,18 +69,20 @@ class DressForm extends React.Component {
     })
   }
 
-  onUpload = (files) => {
+  onUpload = files => {
     const file = files[0]
-    const reader = new FileReader()
-    // encoded = Base64.encode(file)
-    reader.readAsDataURL(file)
-    reader.onload = () => {
-      upload(reader.result).then(res => {
-        console.log(res)
+    const formData = new FormData()
+    formData.set("files", file, file.name)
+    upload(formData).then(res => {
+      const data = res.data[0]
+      this.setState(state => {
+        const { input } = state
+        input.image = data.url
+        state.input = input
+        return state
       })
-
-    }
-  }
+    })
+  };
 
   render() {
     const { input, validation } = this.state
@@ -100,6 +109,7 @@ class DressForm extends React.Component {
                 <label>Price</label>
                 <input placeholder='Prize' value={input.price} name='price' onChange={this.handleChange} />
               </Form.Field>
+              <Form.Select fluid label='Category' options={dressOptions} name='category' placeholder='Gender' />
               <Form.Field error={!validation.image}>
                 <label>Image Url</label>
                 <input placeholder='Image url' value={input.image} name='image' onChange={this.handleChange} />
