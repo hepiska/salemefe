@@ -5,10 +5,16 @@
 4. npm start the app run on port 3000
 
 
-### abaut the app
+### about the app
 1. the app consist of 2 main root '/' and '/cms' fell free to explore. 
 2. this project implement with litle bit atomic design principle.
 3. i think the upload service have a problem so for the product image just pass the url on image input.
+
+
+### asumsion
+1. the dress only have for antributes title, desc, price, category, image
+2. the common user doesnt know abput the cms part so you have to go to /cms if you want to access that
+3. i dont see any req to auth in the email so i dont make one,
 
 
 ### backend
