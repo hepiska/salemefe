@@ -4,6 +4,7 @@ import { connect } from "react-redux"
 import { Button, Loader, Dimmer } from 'semantic-ui-react'
 import SearchBar from 'molecules/searchBar'
 import CmsListItem from 'molecules/cmsListItem'
+import InviniteScroll from 'molecules/inviniteScroll'
 import { getAllDress, deleteDress } from 'services'
 
 
@@ -11,24 +12,61 @@ class DressPage extends React.Component {
   state = {
     searchKey: '',
     isLoading: false,
+    sort: 'id:desc',
+    filter: 'all',
   }
 
   componentDidMount() {
-    this._getAlldress()
+    this.initialFetch()
   }
 
-  _getAlldress = () => {
-    getAllDress()
+  fetchData = (skip, limit) => {
+    this.setState((state) => {
+      state.isFetching = true
+      return state
+    })
+    getAllDress(skip, '', this.state.sort, this.state.filter, limit)
       .then(res => {
         this.setState({
-          dresses: res.data
+          isFetching: false,
+          isLast: res.data.length === 0
+        })
+        this.setState((state) => {
+          state.dresses = state.dresses ? [...state.dresses, ...res.data] : res.data
+          return state
         })
 
       })
   }
 
+  tryFetch = (skip, limit) => {
+    this.fetchData(skip, limit)
+  }
+
+  initialFetch = () => {
+    this.setState((state) => {
+      state.isFetching = true
+      return state
+    })
+    getAllDress(0, this.state.searchKey, this.state.sort, this.state.filter, 5)
+      .then(res => {
+        this.setState({
+          isFetching: false,
+          isLast: res.data.length === 0
+        })
+        this.setState((state) => {
+          state.dresses = res.data
+          return state
+        })
+
+      })
+  }
+
+
   onSearchKeyChange = (event, data) => {
-    this.setState({ searchKey: data.value })
+    this.setState({ searchKey: data.value },() => {
+      this.initialFetch()
+    })
   }
 
   onDeleteClick = (e, data) => {
@@ -62,23 +100,32 @@ class DressPage extends React.Component {
         <SearchBar value={this.state.searchKey} onChange={this.onSearchKeyChange}>
           <Button content='add' onClick={() => this.props.history.push('/cms/dress/add')} color='green' icon='add square' labelPosition='left' />
         </SearchBar>
-        <Wrapper width='100%'>
-          {this.state.dresses ? this.state.dresses.map(dress => (
-            <CmsListItem
-              key={dress.id}
-              id={dress.id}
-              title={dress.title}
-              desc={dress.desc}
-              image={dress.image}
-              price={dress.price}
-              onDelete={this.onDeleteClick}
-              onEdit={this.onEditClick}
-              category={dress.category}
-            />
-          ))
-            : <Loader />}
+        <InviniteScroll
+          padding='50px 0px 0px'
+          fetchData={this.tryFetch}
+          limit={5}
+          height='85vh'
+          isLast={this.state.isLast}
+          isFetching={this.state.isFetching}
+        >
+          <Wrapper width='100%'>
+            {this.state.dresses ? this.state.dresses.map(dress => (
+              <CmsListItem
+                key={dress.id}
+                id={dress.id}
+                title={dress.title}
+                desc={dress.desc}
+                image={dress.image}
+                price={dress.price}
+                onDelete={this.onDeleteClick}
+                onEdit={this.onEditClick}
+                category={dress.category}
+              />
+            ))
+              : <Loader />}
 
-        </Wrapper>
+          </Wrapper>
+        </InviniteScroll>
         <Dimmer active={this.state.isLoading} page>
           <Loader />
         </Dimmer>

@@ -1,7 +1,7 @@
 import React from "react"
 import { Wrapper, ImageWrapper, FontWrapper } from 'atoms'
 import { connect } from "react-redux"
-import { Button, Form, Message, Input } from 'semantic-ui-react'
+import { Button, Form, Dropdown } from 'semantic-ui-react'
 import DropZone from 'react-dropzone'
 import { matchTrue } from 'utils/helper'
 import { upload } from 'services'
@@ -44,7 +44,7 @@ class DressForm extends React.Component {
     },
   }
 
-  handleChange = ({ target }) => {
+  handleChange = ({ target }, data) => {
     this.setState((state) => {
       state.input[target.name] = target.value
       state.validation[target.name] = state.validationParams[target.name].test(target.value)
@@ -109,7 +109,10 @@ class DressForm extends React.Component {
                 <label>Price</label>
                 <input placeholder='Prize' value={input.price} name='price' onChange={this.handleChange} />
               </Form.Field>
-              <Form.Select fluid label='Category' options={dressOptions} name='category' placeholder='Gender' />
+              <Form.Field error={!validation.price}>
+                <label>Category</label>
+                <Dropdown fluid label='Category' options={dressOptions} selection name='category' placeholder='category' onChange={(e,data) => this.handleChange({target:data})} />
+              </Form.Field>
               <Form.Field error={!validation.image}>
                 <label>Image Url</label>
                 <input placeholder='Image url' value={input.image} name='image' onChange={this.handleChange} />

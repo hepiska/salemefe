@@ -10,7 +10,6 @@ import { editDress, getDressDetail } from 'services'
 
 class EdirDressPage extends React.Component {
   state = {
-    searchKey: '',
     isLoading: false,
   }
 

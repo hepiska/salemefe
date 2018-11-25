@@ -41,8 +41,6 @@ class MainPages extends React.Component {
   }
 
   chageSortFilter = (e, data) => {
-    console.log(data)
-
     this.setState((state) => {
       state[data.name] = data.value
       delete state.dress
@@ -142,6 +140,7 @@ class MainPages extends React.Component {
                 {this.state.dresses.map(dress => (
                   <DressCard key={dress.id} {...dress} onClick={this.onitemClick} />
                 ))}
+                {this.state.dresses.length === 0 && <Wrapper>tidak ada barang untuk di tampilkan</Wrapper>}
               </MaxWidthWrapper>
             </InviniteScroll>
           )}
