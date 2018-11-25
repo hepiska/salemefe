@@ -2,7 +2,7 @@
 1. git clone https://github.com/hepiska/salemefe.git
 2. cd project and npm i
 3. make sure you have your .env it included not ignored
-4. npm start 
+4. npm start the app run on port 3000
 
 
 ### abaut the app
