@@ -29,6 +29,7 @@ export const ImageWrapper = styled.img`
   padding: ${({ padding }) => padding || null};
   width: ${({ width }) => width || null};
   max-width: ${({ maxWidth }) => maxWidth || null};
+  max-height: 100%;
   height: ${({ height }) => height || null};
   border: ${({ border }) => border || null};
 `

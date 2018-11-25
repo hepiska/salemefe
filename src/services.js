@@ -20,10 +20,12 @@ export const upload = data => {
 
 export const createDress = data => instance.post("/dresses", data)
 
-export const getAllDress = (skip = "0", searchkey = "", limit = "9") => {
+export const getAllDress = (skip = "0", searchkey = "", sort = 'id:desc', category = 'all', limit = "10", ) => {
   const _start = skip * limit
+  // malas bikin obj qo qs
+  const stringCategory = category === 'all' ? '' : `&category=${category}`
   return instance.get(
-    `/dresses?title_contains=${searchkey}&_limit=${limit}&_start=${_start}`
+    `/dresses?title_contains=${searchkey}&_limit=${limit}&_start=${_start}&_sort=${sort}&${stringCategory}`
   )
 }
 

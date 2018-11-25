@@ -1,23 +1,26 @@
-import React from "react";
+import React from "react"
 import {
   Switch,
   Route,
   BrowserRouter as Router,
   withRouter,
   //   Redirect,
-} from "react-router-dom";
+} from "react-router-dom"
 import { Wrapper } from 'atoms'
 
-import { connect } from "react-redux";
+import { connect } from "react-redux"
 import CmsPage from './cms'
 import MainPage from './main'
+import DetailPage from './main/detail'
 
 
 const Pages = () => (
-  <Wrapper width='100%' >
+  <Wrapper width='100%'>
     <Switch>
       <Route path="/cms" component={CmsPage} />
+      <Route path="/:id" component={DetailPage} />
       <Route path="/" component={MainPage} />
+
     </Switch>
   </Wrapper>
 )
