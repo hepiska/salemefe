@@ -5,6 +5,7 @@ import { Button, Form, Dropdown } from 'semantic-ui-react'
 import DropZone from 'react-dropzone'
 import { matchTrue } from 'utils/helper'
 import { upload } from 'services'
+import { Base_url } from '../constant'
 
 
 const defaultData = {
@@ -77,7 +78,7 @@ class DressForm extends React.Component {
       const data = res.data[0]
       this.setState(state => {
         const { input } = state
-        input.image = data.url
+        input.image = data.url.replace('http://localhost:1338',Base_url)
         state.input = input
         return state
       })
