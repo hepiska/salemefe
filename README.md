@@ -6,13 +6,18 @@
 
 
 ### abaut the app
-the app consist of 2 main root '/' and '/cms' fell free to explore. this project implement with litle bit atomic design principle.
-i think the upload service have a problem so for the product image just pass the url on image input.
+1. the app consist of 2 main root '/' and '/cms' fell free to explore. 
+2. this project implement with litle bit atomic design principle.
+3. i think the upload service have a problem so for the product image just pass the url on image input.
 
 
 ### backend
-for the backend i use strapi, here the git if you want to se the code https://github.com/hepiska/saleme.git
+1. for the backend i use strapi that i serve on my digital ocean, here the git if you want to se the code https://github.com/hepiska/saleme.git
+2. about strapi https://strapi.io
 
+
+### testing
+about the testing im sorry its been a while since i wrote test, and it will take time for me to relearn that, beside im have other things to do, so im sorry, but if in your company enforce testing insyaallah it will not be problem
 
 ### last 
 thanks for interested to test me hope the result please u if something of please just contact me 081327061921
