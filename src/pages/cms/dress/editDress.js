@@ -1,9 +1,6 @@
 import React from "react"
 import { Wrapper } from 'atoms'
-import { connect } from "react-redux"
-import { Button, Loader, Dimmer } from 'semantic-ui-react'
-import SearchBar from 'molecules/searchBar'
-import CmsListItem from 'molecules/cmsListItem'
+import {  Loader, Dimmer } from 'semantic-ui-react'
 import DressFrom from 'organisms/dressForm'
 import { editDress, getDressDetail } from 'services'
 

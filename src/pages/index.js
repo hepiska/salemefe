@@ -3,12 +3,10 @@ import {
   Switch,
   Route,
   BrowserRouter as Router,
-  withRouter,
-  //   Redirect,
+
 } from "react-router-dom"
 import { Wrapper } from 'atoms'
 
-import { connect } from "react-redux"
 import CmsPage from './cms'
 import MainPage from './main'
 import DetailPage from './main/detail'

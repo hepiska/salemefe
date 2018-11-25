@@ -1,11 +1,4 @@
 import React from "react"
-import {
-  Switch,
-  Route,
-  BrowserRouter as Router,
-  withRouter,
-  //   Redirect,
-} from "react-router-dom"
 import { Wrapper, FontWrapper } from 'atoms'
 import styled from 'styled-components'
 import InviniteScroll from 'molecules/inviniteScroll'

@@ -18,7 +18,6 @@ const MaxWidthWrapper = styled(Wrapper)`
 
 class DetailPage extends React.Component {
   state = {
-    searchKey: '',
     isLoading: true,
     isImageModalOpen: false,
   }
